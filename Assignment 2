@@ -1,0 +1,35 @@
+makeCacheMatrix <- function(x = matrix()) { 
+        cache <- NULL 
+        setMatrix <- function(value) { 
+                x <<- value
+                cache <<- NULL
+        }  
+        
+        setInverse <- function(value) {
+                cache <<- value
+        }
+        
+        getCache <- function() { 
+                cache
+        }
+        
+        getMatrix <- function() {
+                x
+        }
+        
+        list(setMatrix = setMatrix, setInverse = setInverse, getMatrix = getMatrix, getCache = getCache) 
+} 
+cacheSolve <- function(x, ...) { 
+        inverse <- x$getCache()
+        if(!is.null(inverse)) {
+                message("Inverse exist")
+                inverse <- x$getCache() 
+        } 
+        else {
+                message("calculating the inverse")
+                matx <- x$getMatrix()
+                inverse <- solve(matx)
+                x$setInverse(inverse)
+        }
+        return(inverse)
+}
